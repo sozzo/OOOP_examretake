@@ -1,4 +1,5 @@
 #pragma once
+#include<random>
 class A
 {
 private: int a;
@@ -9,5 +10,7 @@ public:
 	void setA(int x) {
 		this->a = x;
 	}
+	void generate() {
+		this->setA(rand() % 100);
+	}
 };
-

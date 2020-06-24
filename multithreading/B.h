@@ -15,8 +15,6 @@ public:
 	B AintoB(A a) {
 		setB((double)a.getA());
 	}
-	B mergeB(vector<B>) {
-
-	}
+	
 };
 
