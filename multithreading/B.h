@@ -9,16 +9,16 @@ public:
 	B() : a(A()) {}
 	B(int k) : a(A(k)) {}
 	B(A a) : a(a) {}
-	B transform(A a)
+	void transform(A a)
 	{
-		return B(a);
+		this->a.x= a.x;
 	}
-	B merge(B* bArray, size_t N)
+	B merge(std::vector<B> bArray, int N)
 	{
-		int k = 0;
-		for (size_t i = 0; i < N; i++)
-			k += bArray[i].a.x;
-
+		int k = 1;
+		for (int i = 0; i < N; i++){
+			k = k * bArray.at(i).a.x;
+	}
 		return B(k);
 	}
 

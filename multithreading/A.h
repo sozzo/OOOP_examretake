@@ -7,9 +7,9 @@ public:
 
 	A() : x(0) {}
 	A(int x) : x(x) {}
-	A generate()
+	void generate()
 	{
-		return A(rand()%100);
+		this->x=(rand()%100);
 	}
 
 };
