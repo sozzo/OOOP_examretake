@@ -8,12 +8,12 @@ void genTransferMerge(int x, B &toMerge) {//toMerge is the variable that we merg
 	vector<A> generator;
 	vector<B> transformer;
 	B res;
-	for (int i = 0; i < x; i++) {
+	for (unsigned int i = 0; i < x; i++) {
 		A a(1);
 		a.generate();
 		generator.push_back(a);
 	}
-	for (int i = 0; i < x; i++) {
+	for (unsigned int i = 0; i < x; i++) {
 		B b(1);
 		b.transform(generator.at(i));
 
@@ -43,29 +43,30 @@ int main()
 			cout << "amount of threads wasn't changed" << endl;
 		}
 		else {
-			cout << "wrong input, amount of threads wasn't changed";
+			cout << "wrong input, amount of threads wasn't changed"<<endl;
 		}
 	}
 	for (int i = 0; i < numberOfThreads; i++) {
 		inBetweenRes.push_back(B(1));
 	}
 
-	while (amountOfVariables < 1) {
-		cout << "how many As shall we generate(can't be less than 1)";
+	while (amountOfVariables < numberOfThreads) {
+		cout << "how many As shall we generate(can't be less than the amount of threads)";
 		cin >> amountOfVariables;
-		if (amountOfVariables < 1) {
+		cout << endl;
+		if (amountOfVariables < numberOfThreads) {
 			cout << "wrong input" << endl;
 		}
 	}
 
 
 	if (amountOfVariables % numberOfThreads == 0) {
-		for (int i = 0; i < numberOfThreads; i++) {
+		for (unsigned int i = 0; i < numberOfThreads; i++) {
 			threads.push_back(thread(genTransferMerge, amountOfVariables / numberOfThreads, ref(inBetweenRes.at(i))));//pushing same amount of elements to all threads
 		
 		}
 	}else{
-		for (int i = 0; i < numberOfThreads - 1; i++) {
+		for (unsigned int i = 0; i < numberOfThreads - 1; i++) {
 			threads.push_back(thread(genTransferMerge, (amountOfVariables / numberOfThreads)+1, ref(inBetweenRes.at(i))));//pushing different amount of elements to last thread
 		}
 		threads.push_back(thread(genTransferMerge, (amountOfVariables - (amountOfVariables / numberOfThreads) + 1) * (numberOfThreads-1), ref(inBetweenRes.at(numberOfThreads-1))));//calculating number of leftover A variables
@@ -75,7 +76,7 @@ int main()
 		if (threads.at(i).joinable())
 			threads.at(i).join();
 	}
-	for (int i = 0; i < numberOfThreads; i++) {
+	for (unsigned int i = 0; i < numberOfThreads; i++) {
 		res.a.x = (res.a.x * inBetweenRes.at(i).a.x);
 	}
 	cout<<"result is " << res.a.x<<endl;

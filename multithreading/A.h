@@ -5,11 +5,11 @@ class A
 public:
 	int x;
 
-	A() : x(0) {}
+	A() : x(1) {}
 	A(int x) : x(x) {}
 	void generate()
 	{
-		this->x=(rand()%100);
+		this->x=(rand()%10+1);
 	}
 
 };
