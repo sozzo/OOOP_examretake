@@ -9,12 +9,12 @@ void genTransferMerge(int x, B &toMerge) {//toMerge is the variable that we merg
 	vector<B> transformer;
 	B res;
 	for (int i = 0; i < x; i++) {
-		A a(7);
+		A a(1);
 		a.generate();
 		generator.push_back(a);
 	}
 	for (int i = 0; i < x; i++) {
-		B b(7);
+		B b(1);
 		b.transform(generator.at(i));
 
 		transformer.push_back(b);
@@ -30,7 +30,7 @@ int main()
 	char threadAnswer;
 	vector<thread> threads;//vector of threads
 	vector<B>inBetweenRes;//results after closing each vector
-	B res(0);
+	B res(1);
 	res.a.x = 1;
 	cout << "Do you want to change the amount of threads(set to the number of cores by default)? y/n" << endl;
 	cin >> threadAnswer;
@@ -61,14 +61,14 @@ int main()
 
 	if (amountOfVariables % numberOfThreads == 0) {
 		for (int i = 0; i < numberOfThreads; i++) {
-			threads.push_back(thread(genTransferMerge, amountOfVariables / numberOfThreads,inBetweenRes.at(i)));//pushing same amount of elements to all threads
+			threads.push_back(thread(genTransferMerge, amountOfVariables / numberOfThreads, ref(inBetweenRes.at(i))));//pushing same amount of elements to all threads
 		
 		}
 	}else{
 		for (int i = 0; i < numberOfThreads - 1; i++) {
-			threads.push_back(thread(genTransferMerge, (amountOfVariables / numberOfThreads)+1, inBetweenRes.at(i)));//pushing different amount of elements to last thread
+			threads.push_back(thread(genTransferMerge, (amountOfVariables / numberOfThreads)+1, ref(inBetweenRes.at(i))));//pushing different amount of elements to last thread
 		}
-		threads.push_back(thread(genTransferMerge, (amountOfVariables - (amountOfVariables / numberOfThreads) + 1) * (numberOfThreads-1), inBetweenRes.at(numberOfThreads-1)));//calculating number of leftover A variables
+		threads.push_back(thread(genTransferMerge, (amountOfVariables - (amountOfVariables / numberOfThreads) + 1) * (numberOfThreads-1), ref(inBetweenRes.at(numberOfThreads-1))));//calculating number of leftover A variables
 	}
 	for (unsigned int i = 0; i < numberOfThreads; ++i)
 	{
