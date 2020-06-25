@@ -2,15 +2,15 @@
 #include<random>
 class A
 {
-private: int a;
-public: 
-	int getA() {
-		return this->a;
+public:
+	int x;
+
+	A() : x(0) {}
+	A(int x) : x(x) {}
+	A generate()
+	{
+		return A(rand()%100);
 	}
-	void setA(int x) {
-		this->a = x;
-	}
-	void generate() {
-		this->setA(rand() % 100);
-	}
+
 };
+
